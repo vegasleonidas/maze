@@ -1,21 +1,16 @@
-from window_class import Window, Point, Line
+from window_class import *
 
 def main():
-    win = Window(800, 600)
-
-    # Create points
-    p1 = Point(100, 100)
-    p2 = Point(200, 200)
-    p3 = Point(200, 100)
-    p4 = Point(300, 200)
+    win = Window(400, 400)
     
-    # Create lines
-    line1 = Line(p1, p2)
-    line2 = Line(p3, p4)
+    cell1 = Cell(50, 50, 100, 100, win)
+    cell1.draw()
     
-    # Draw lines
-    win.draw_line(line1, "red")
-    win.draw_line(line2, "blue")
+    cell2 = Cell(100, 50, 150, 100, win)
+    cell2.has_left_wall = False  # Removing left wall to connect to cell1
+    cell2.draw()
+    
+    cell1.draw_move(cell2)
 
     win.wait_for_close()
 
