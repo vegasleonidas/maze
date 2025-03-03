@@ -1,7 +1,7 @@
 from tkinter import Tk, BOTH, Canvas
 
 class Cell:
-    def __init__(self, x1, y1, x2, y2, window):
+    def __init__(self, x1, y1, x2, y2, window=None):
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
