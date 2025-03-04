@@ -44,3 +44,13 @@ class Maze:
             return
         self.win.redraw()
         time.sleep(0.05)
+
+    def _break_entrance_and_exit(self):
+        """Removes the entrance and exit walls and updates the drawing."""
+        # Remove top wall of the entrance (top-left cell)
+        self._cells[0][0].has_top_wall = False
+        self._draw_cell(0, 0)
+        
+        # Remove bottom wall of the exit (bottom-right cell)
+        self._cells[self.num_cols - 1][self.num_rows - 1].has_bottom_wall = False
+        self._draw_cell(self.num_cols - 1, self.num_rows - 1)
