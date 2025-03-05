@@ -93,3 +93,36 @@ class Maze:
         for column in self._cells:
             for cell in column:
                 cell.visited = False
+
+    def solve(self):
+        return self._solve_r(0, 0)
+    
+    def _solve_r(self, i, j):
+        self._animate()
+        
+        cell = self._cells[i][j]
+        cell.visited = True
+        
+        # If the goal is reached (bottom-right cell), return True
+        if i == self.num_cols - 1 and j == self.num_rows - 1:
+            return True
+        
+        # Possible movements: left, right, up, down
+        directions = [(0, -1, "top_wall"), (1, 0, "right_wall"), (0, 1, "bottom_wall"), (-1, 0, "left_wall")]
+        
+        for di, dj, wall in directions:
+            ni, nj = i + di, j + dj
+            
+            if 0 <= ni < self.num_cols and 0 <= nj < self.num_rows:
+                next_cell = self._cells[ni][nj]
+                
+                if not next_cell.visited and not getattr(cell, f"has_{wall}"):
+                    cell.draw_move(next_cell)
+                    
+                    if self._solve_r(ni, nj):
+                        return True
+                    
+                    # Undo move if path doesn't lead to solution
+                    cell.draw_move(next_cell, undo=True)
+        
+        return False
