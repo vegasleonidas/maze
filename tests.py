@@ -1,7 +1,8 @@
 import unittest 
 from unittest.mock import MagicMock
 from maze import Maze
-from window_class import Window
+from window_class import Window, Line, Point
+from cell import Cell
 
 class Tests(unittest.TestCase):
     def test_maze_create_cells(self):
@@ -35,6 +36,23 @@ class Tests(unittest.TestCase):
         self.assertFalse(maze._cells[0][0].has_top_wall)
         self.assertFalse(maze._cells[maze.num_cols - 1][maze.num_rows - 1].has_bottom_wall)
         mock_window.draw_line.assert_called()
+
+    def test_reset_cells_visited(self):
+        maze = Maze(0, 0, 5, 5, 10, 10)
+        
+        # Mark all cells as visited manually
+        for column in maze._cells:
+            for cell in column:
+                cell.visited = True
+        
+        # Reset visited status
+        maze._reset_cells_visited()
+        
+        # Check if all cells are reset to False
+        for column in maze._cells:
+            for cell in column:
+                self.assertFalse(cell.visited)
+
 
 if __name__ == "__main__":
     unittest.main()
